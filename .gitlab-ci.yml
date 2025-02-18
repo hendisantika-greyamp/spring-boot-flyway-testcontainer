@@ -60,3 +60,16 @@ maven-build:
   script: "mvn clean package"
   only:
     - test-containers
+
+## Use https://github.com/sj26/rspec_junit_formatter to generate a JUnit report format XML file with rspec
+ruby:
+  stage: test
+  script:
+    - bundle install
+    - bundle exec rspec --format progress --format RspecJunitFormatter --out rspec.xml
+  artifacts:
+    when: always
+    paths:
+      - rspec.xml
+    reports:
+      junit: rspec.xml
